@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Discuss</title>
+    <script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <script>
+        window.JC = {};
+        window.JC.currentPage = 0;
+        window.JC.tmp_listItem = '<li class="list-group-item"><span class="list-group-item-avatar"><img></span><span class="list-group-item-name"></span>&nbsp:&nbsp<span class="list-group-item-content"></span></li>';
+        function load(url){
+            var nextPage = window.JC.currentPage+1;
+            $.ajax({
+                type:'POST',
+                url:url+'?page='+nextPage,
+                beforeSend:function(){
+                    $('.blog_addMore').show();
+                },
+                success:function(data){
+                    loadData(data);
+                    console.log('load data succeed,current page is :'+window.JC.currentPage);
+                },
+                error:function(){
+                    console.log('get data error');
+                },
+                complete:function(){
+                    $('.blog_addMore').hide();
+                }
+            });
+        }
+        function loadData(data){
+            var $discussUl = $('#discuss .list-group');
+            var disArray = data.disArray;
+            for(var i = 0 ; i < disArray.length ; i ++){
+                var $dis = $(window.JC.tmp_listItem);
+                $dis.find('.list-group-item-avatar img').attr('src',disArray[i].imgUrl);
+                $dis.find('.list-group-item-name').text(disArray[i].name);
+                $dis.find('.list-group-item-content').text(disArray[i].content);
+                $dis.appendTo($discussUl);
+            }
+            window.JC.currentPage++;
+        }
+        function scrollBottom(){
+            $(window).scroll(function(){
+                var $this =$(this),
+                    viewH =$(this).height(),//可见高度
+                    contentH =$(document).height(),//内容高度
+                    scrollTop =$(this).scrollTop();//滚动高度
+                if(scrollTop/(contentH -viewH)>=0.95){ //到达底部100px时,加载新内容
+                    load('data.json');
+                }
+            });
+        }
+        $(function(){
+            load('data.json');
+            scrollBottom();
+        });
+
+    </script>
+    <style type="text/css">
+        .list-group-item-avatar img{height:30px;width:30px;border-radius:50% 50%;margin-right:10px}.blog_addMore span{display:block;height:40px;line-height:40px;background:#888;color:#fff;width:80%;max-width:500px;border-radius:20px 20px;text-align:center;margin:20px auto}
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <h1>Example page header</h1>
+    </div>
+    <div id="discuss">
+        <ul class="list-group">
+        </ul>
+        <div class="blog_addMore" style="display: none">
+            <span>正在加载……</span>
+        </div>
+    </div>
+</body>
+</html>
