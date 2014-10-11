@@ -10,7 +10,7 @@
     <script>
         window.JC = {};
         window.JC.currentPage = 0;
-        window.JC.tmp_listItem = '<li class="list-group-item"><span class="list-group-item-avatar"><img></span><span class="list-group-item-name"></span>&nbsp:&nbsp<span class="list-group-item-content"></span></li>';
+        window.JC.tmp_listItem = '<li class="list-group-item"><span class="list-group-item-avatar"><img></span><span class="list-group-item-name"><a></a></span>&nbsp:&nbsp<span class="list-group-item-content"></span></li>';
         function load(url){
             var nextPage = window.JC.currentPage+1;
             $.ajax({
@@ -37,7 +37,8 @@
             for(var i = 0 ; i < disArray.length ; i ++){
                 var $dis = $(window.JC.tmp_listItem);
                 $dis.find('.list-group-item-avatar img').attr('src',disArray[i].imgUrl);
-                $dis.find('.list-group-item-name').text(disArray[i].name);
+                $dis.find('.list-group-item-name a').text(disArray[i].name);
+                $dis.find('.list-group-item-name a').attr('src',disArray[i].nameUrl);
                 $dis.find('.list-group-item-content').text(disArray[i].content);
                 $dis.appendTo($discussUl);
             }
@@ -61,15 +62,61 @@
 
     </script>
     <style type="text/css">
-        .list-group-item-avatar img{height:30px;width:30px;border-radius:50% 50%;margin-right:10px}.blog_addMore span{display:block;height:40px;line-height:40px;background:#888;color:#fff;width:80%;max-width:500px;border-radius:20px 20px;text-align:center;margin:20px auto}
-    </style>
+        .page-header{
+            margin-left: 20px;
+        }
+        .weibo_title img {
+            height: 50px;
+            width: 50px;
+            margin-right:10px;
+        }
+        .weibo_content {
+            font-size:14px;
+            line-height: 23px;
+            padding: 4px 0 4px;
+        }
+        .list-group-item-avatar img {
+            height:30px;
+            width:30px;
+            border-radius:50% 50%;
+            margin-right:10px
+        }
+        .blog_addMore span {
+            display:block;
+            height:40px;
+            line-height:40px;
+            background:#888;
+            color:#fff;
+            width:80%;
+            max-width:500px;
+            border-radius:20px 20px;
+            text-align:center;
+            margin:20px auto
+        }   </style>
 </head>
 <body>
     <div class="page-header">
-        <h1>Example page header</h1>
+        <h1>Weibo Discuss</h1>
+    </div>
+    <div class="weibo jumbotron">
+        <h2 class="weibo_title"><img src="http://tp4.sinaimg.cn/1750070171/50/40009602334/1">36氪</h2>
+        <div class="weibo_content">
+            99美元，卡尔蔡司发布虚拟现实眼镜VR One | 和Oculus Rift不同，VR One是面向手机市场的一款产品，这和三星的Gear VR、暴风影音的暴风魔镜多少有些类似。只要你有一部屏幕尺寸在4.7至5.2英寸之间的手机，就可以适配并享受虚拟现实的沉浸式场景。<a class="W_btn_c" suda-uatrack="key=tblog_card&amp;value=click_title:1005001-article" title="99美元，卡尔蔡司发布虚拟现实眼镜VR One" href="http://t.cn/R7vuLfH" action-type="feed_list_url" target="_blank"><span><em class="W_btn_icon"><i class="W_ico12 icon_cd_link"></i><i class="W_vline S_line1_c">|</i></em><em class="W_autocut S_link1">99美元，卡尔蔡司发布虚拟现实眼镜VR One</em></span></a> by <a render="ext" extra-data="type=atname" href="/n/Daniel-_-Li?from=feed&amp;loc=at" usercard="name=Daniel-_-Li">@Daniel-_-Li</a>
+        </div>
     </div>
     <div id="discuss">
         <ul class="list-group">
+            <li class="list-group-item">
+                <span class="list-group-item-avatar">
+                    <img src="http://tp2.sinaimg.cn/1978328733/50/5694586188/1">
+                </span>
+                <span class="list-group-item-name">
+                    <a href="http://weibo.com/laogege" >花样美男范德彪</a>
+                </span>&nbsp:&nbsp
+                <span class="list-group-item-content">
+                    如此看来，曾经那场互联网泡沫危机对华尔街的影响是沉重的。 (9分钟前)
+                </span>
+            </li>
         </ul>
         <div class="blog_addMore" style="display: none">
             <span>正在加载……</span>
