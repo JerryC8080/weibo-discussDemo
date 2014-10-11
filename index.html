@@ -38,7 +38,7 @@
                 var $dis = $(window.JC.tmp_listItem);
                 $dis.find('.list-group-item-avatar img').attr('src',disArray[i].imgUrl);
                 $dis.find('.list-group-item-name a').text(disArray[i].name);
-                $dis.find('.list-group-item-name a').attr('src',disArray[i].nameUrl);
+                $dis.find('.list-group-item-name a').attr('href',disArray[i].nameUrl);
                 $dis.find('.list-group-item-content').text(disArray[i].content);
                 $dis.appendTo($discussUl);
             }
